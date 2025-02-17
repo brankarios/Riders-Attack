@@ -2,6 +2,7 @@ import java.util.Random;
 
 public class Riders{
     
+    private int id;
     private String app;
     private String service;
     private int arrivalTime;
@@ -10,10 +11,10 @@ public class Riders{
     private int minArrivalTime = 1;
     private int maxArrivalTime = 30;
 
-    public Riders(String[] app, String[] service){
+    public Riders(String[] app, String[] service, int id){
         
         this.arrivalTime = randomIntGenerator.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
-        
+        this.id = id;
         this.app = app[randomIntGenerator.nextInt(3)]; 
         this.service = service[randomIntGenerator.nextInt(2)];
         
@@ -37,41 +38,32 @@ public class Riders{
     
     }
 
+    public int getID(){
+        return this.id;
+    }
+
     public boolean isAvailable(){
         return this.isAvailable;
+    }
+
+    public void decrementTimeArrival(){
+        this.isAvailable = false;
+        this.arrivalTime -= 1;
     }
 
     public void travel(int travelTime) {
         int riderTravelTime = travelTime;
         this.isAvailable = false;
-        System.out.println("Rider " + this.app + " - " + this.service + " esta viajando.");
-    
-        try {
-            Thread.sleep(this.arrivalTime * 10);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    
-        System.out.println("Rider " + this.app + " ha llegado al cliente.");
         
         while(riderTravelTime > 0){
             riderTravelTime -= 1;
-            
-            try {
-                Thread.sleep(riderTravelTime * 10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
         }
     
-        System.out.println("Cliente llevado exitosamente por " + this.app + " - " + this.service);
+        System.out.println("Cliente llevado exitosamente por rider #" + this.id);
         this.isAvailable = true;
         this.arrivalTime = randomIntGenerator.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
     
-        synchronized (this) {
-            System.out.println("Rider " + this.app + " - " + this.service + " esta ahora disponible.");
-            notifyAll();
-        }
+        System.out.println("Rider #" + this.id + " esta ahora disponible.");
     }
 }
 

@@ -7,7 +7,7 @@ class RidersAttack {
 
         Riders[] riders = new Riders[numOfRiders];
         for (int i = 0; i < numOfRiders; i++) {
-            riders[i] = new Riders(app, service);
+            riders[i] = new Riders(app, service, i);
         }
 
         DespachadorRiders monitor = new DespachadorRiders(riders, numOfUsers);

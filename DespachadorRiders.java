@@ -12,14 +12,6 @@ class DespachadorRiders {
     }
 
     public synchronized void assignRider(String userApp, List<Riders> availableRiders, int travelTime) {
-        while (availableRiders.isEmpty()) {
-            try {
-                System.out.println("Thread " + Thread.currentThread().threadId() + " waiting.");
-                wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
 
         Riders prospectRider = availableRiders.get(0);
         for (int i = 1; i < availableRiders.size(); i++) {
@@ -32,7 +24,26 @@ class DespachadorRiders {
             }
         }
 
-        prospectRider.travel(travelTime);
+        if(prospectRider != null){
+            while(prospectRider.getArrivalTime() > 0){
+                ((User) Thread.currentThread()).assignRider(prospectRider);
+                prospectRider.decrementTimeArrival();
+                if (Thread.currentThread() instanceof User) {
+                    ((User) Thread.currentThread()).selectRider();
+                    if(prospectRider.getID() != ((User) Thread.currentThread()).getRider().getID()){
+                        System.out.println("El rider del usuario #" + Thread.currentThread().threadId() + " cambio del #" + prospectRider.getID() + " al #" + ((User) Thread.currentThread()).getRider().getID() + ".");
+                    } 
+                }
+            }
+
+            if (Thread.currentThread() instanceof User) {
+                if(!((User) Thread.currentThread()).isTraveling()){
+                    ((User) Thread.currentThread()).travel();
+                }
+            }
+            prospectRider.travel(travelTime);
+        }
+
         notifyAll();
     }
 
@@ -46,8 +57,6 @@ class DespachadorRiders {
 
         if (!availableRiders.isEmpty()) {
             assignRider(userApp, availableRiders, travelTime);
-        } else {
-            System.out.println("No hay riders disponibles en este momento.");
         }
     }
 
