@@ -11,7 +11,7 @@ class DespachadorRiders {
         this.totalClients = totalClients;
     }
 
-    public synchronized void assignRider(String userApp, List<Riders> availableRiders, DecrementingTimer travelTime) {
+    public synchronized void assignRider(String userApp, List<Riders> availableRiders, int travelTime) {
         while (availableRiders.isEmpty()) {
             try {
                 System.out.println("Thread " + Thread.currentThread().threadId() + " waiting.");
@@ -36,7 +36,7 @@ class DespachadorRiders {
         notifyAll();
     }
 
-    public synchronized void getAvailableRiders(String userApp, String userService, DecrementingTimer travelTime) {
+    public synchronized void getAvailableRiders(String userApp, String userService, int travelTime) {
         List<Riders> availableRiders = new ArrayList<>();
         for (Riders rider : listOfRiders) {
             if (rider.getService().equals(userService) && rider.isAvailable()) {
