@@ -47,7 +47,7 @@ class RidersAttack {
 
         User[] users = new User[numOfUsers];
         for (int i = 0; i < numOfUsers; i++) {
-            users[i] = new User(app, service, monitor);
+            users[i] = new User(i, app, service, monitor);
             users[i].start();
         }
 

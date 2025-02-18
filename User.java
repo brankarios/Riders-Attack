@@ -2,6 +2,7 @@ import java.util.Random;
 
 class User extends Thread {
 
+    private int id;
     private String app;
     private String service;
     private int travelTime;
@@ -9,9 +10,10 @@ class User extends Thread {
     private DespachadorRiders monitor;
     private Riders assignedRider;
 
-    public User(String[] app, String[] service, DespachadorRiders ridersMonitor) {
+    public User(int id, String[] app, String[] service, DespachadorRiders ridersMonitor) {
         int minTravelTime = 1;
         int maxTravelTime = 50;
+        this.id = id;
         this.monitor = ridersMonitor;
         this.randomIntGenerator = new Random();
         this.travelTime = randomIntGenerator.nextInt(maxTravelTime - minTravelTime + 1) + minTravelTime;
@@ -21,7 +23,7 @@ class User extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Usuario #" + currentThread().threadId() + " solicitando servicio de (" + this.service + "-" + this.app + ").");
+        System.out.println("Usuario #" + this.id + " solicitando servicio de (" + this.service + "-" + this.app + ").");
         while(this.assignedRider == null){
             selectRider();
         }
@@ -45,7 +47,7 @@ class User extends Thread {
 
         if(this.assignedRider != null){
             int riderArrivalTime = this.assignedRider.getArrivalTime();
-            System.out.println("Al usuario #" + currentThread().threadId() + " se le asigno el rider #" + this.assignedRider.getID() + " (" + this.assignedRider.getService() + "-" + this.assignedRider.getApp() + ").");
+            System.out.println("Al usuario #" + this.id + " se le asigno el rider #" + this.assignedRider.getID() + " (" + this.assignedRider.getService() + "-" + this.assignedRider.getApp() + ").");
             while(riderArrivalTime > 0 && this.assignedRider != null){
                 riderArrivalTime -= 1;
                 try {
@@ -55,7 +57,7 @@ class User extends Thread {
                 }
                 newRider = this.monitor.getBestRider(this.app, this.service, this.travelTime);
                 if(this.assignedRider != newRider && newRider != null){
-                    System.out.println("Al usuario #" + currentThread().threadId() + " se le cambio el rider #" + this.assignedRider.getID() + " por el rider #" + newRider.getID() + ".");
+                    System.out.println("Al usuario #" + this.id + " se le cambio el rider #" + this.assignedRider.getID() + " por el rider #" + newRider.getID() + ".");
                     this.assignedRider = newRider;
                     riderArrivalTime = this.assignedRider.getArrivalTime();
                 }
@@ -82,7 +84,7 @@ class User extends Thread {
             }
         }
 
-        System.out.println("El rider #" + this.assignedRider.getID() + " llevo al usuario #" + currentThread().threadId() + ".");
+        System.out.println("El rider #" + this.assignedRider.getID() + " llevo al usuario #" + this.id + ".");
         this.assignedRider.setAvailability(true);
         monitor.clientArrived(); 
     }
