@@ -11,14 +11,15 @@ public class Riders{
     private int minArrivalTime = 1;
     private int maxArrivalTime = 30;
 
-    public Riders(String[] app, String[] service, int id){
+    public Riders(String app, String[] service, int id){
         
         this.arrivalTime = randomIntGenerator.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
         this.id = id;
-        this.app = app[randomIntGenerator.nextInt(3)]; 
+        this.app = app; 
         this.service = service[randomIntGenerator.nextInt(2)];
         
         this.isAvailable = true;
+
     }
 
     public String getApp(){
@@ -46,24 +47,8 @@ public class Riders{
         return this.isAvailable;
     }
 
-    public void decrementTimeArrival(){
-        this.isAvailable = false;
-        this.arrivalTime -= 1;
-    }
-
-    public void travel(int travelTime) {
-        int riderTravelTime = travelTime;
-        this.isAvailable = false;
-        
-        while(riderTravelTime > 0){
-            riderTravelTime -= 1;
-        }
-    
-        System.out.println("Cliente llevado exitosamente por rider #" + this.id);
-        this.isAvailable = true;
-        this.arrivalTime = randomIntGenerator.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
-    
-        System.out.println("Rider #" + this.id + " esta ahora disponible.");
+    public void setAvailability(boolean availability){
+        this.isAvailable = availability;
     }
 }
 
