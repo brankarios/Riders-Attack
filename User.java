@@ -62,22 +62,6 @@ class User extends Thread {
             }
             this.travel();
         }
-
-        /*if(this.assignedRider != null){
-            while(this.assignedRider.getArrivalTime() > 0 && this.assignedRider != null){
-                int riderArrivalTime = this.assignedRider.getArrivalTime();
-                while (riderArrivalTime > 0){
-                    riderArrivalTime -= 1;
-                    newRider = this.monitor.getBestRider(this.app, this.service, this.travelTime);
-                    if(this.assignedRider != newRider && newRider != null){
-                        previousRiderID = this.assignedRider.getID();
-                        this.assignedRider = newRider;
-                        riderArrivalTime = this.assignedRider.getArrivalTime();
-                    }
-                }
-                this.travel();
-            }
-        }*/
     }
 
     public Riders getRider(){
