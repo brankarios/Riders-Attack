@@ -92,7 +92,7 @@ class User extends Thread {
         while(travelTime > 0){
             this.travelTime -= 1;
             try {
-                sleep(this.travelTime * 10);
+                sleep(this.travelTime * 1000);
             } catch (InterruptedException e) {
                 currentThread().interrupt();
             }
