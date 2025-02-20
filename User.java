@@ -53,7 +53,6 @@ class User extends Thread {
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {
-                    currentThread().interrupt();
                 }
                 newRider = this.monitor.getBestRider(this.app, this.service, this.travelTime);
                 if(this.assignedRider != newRider && newRider != null){
@@ -78,9 +77,8 @@ class User extends Thread {
         while(travelTime > 0){
             this.travelTime -= 1;
             try {
-                sleep(this.travelTime * 1000);
+                sleep(1000);
             } catch (InterruptedException e) {
-                currentThread().interrupt();
             }
         }
 

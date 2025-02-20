@@ -43,7 +43,7 @@ class DespachadorRiders {
     public synchronized void clientArrived() {
         arrivedClients++;
         if (arrivedClients == totalClients) {
-            System.out.println("Todos los clientes han llegado a su destino. Terminando el programa...");
+            System.out.println("Todos los clientes han llegado a su destino.");
             System.exit(0);
         }
     }
