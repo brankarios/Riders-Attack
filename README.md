@@ -140,3 +140,7 @@ Cada usuario (hilo) solicita un servicio llamando al DespachadorRiders para obte
 **Finalización:**
 
 Cuando todos los usuarios han completado sus viajes, el programa termina.
+
+### Casos de prueba
+
+Se incluyen seis casos de prueba con la finalidad de probar al máximo las características del programa. Se asume que las entradas siempre serán correctas: la cantidad de usuarios y riders será mayor que cero.

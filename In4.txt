@@ -1,0 +1,4 @@
+3000
+bipbip, 1000
+ridery, 1000
+yummy, 1000
